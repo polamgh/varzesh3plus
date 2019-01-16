@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4xv-24-hcI">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Modal View Controller-->
+        <scene sceneID="qS9-WJ-8Go">
+            <objects>
+                <viewController storyboardIdentifier="ModalView" id="4xv-24-hcI" customClass="ModalViewController" customModule="Varzesh3Plus" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xfu-fZ-wHY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qZN-KU-ZkG">
+                                <rect key="frame" x="0.0" y="20" width="375" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="Ae6-ia-yxs"/>
+                                </constraints>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="xOl-LY-tbd">
+                                <rect key="frame" x="0.0" y="178" width="375" height="481"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="gQ1-fT-2uq" firstAttribute="bottom" secondItem="xOl-LY-tbd" secondAttribute="bottom" constant="8" id="8TL-fR-ESX"/>
+                            <constraint firstItem="qZN-KU-ZkG" firstAttribute="top" secondItem="gQ1-fT-2uq" secondAttribute="top" id="S2F-Dl-YZg"/>
+                            <constraint firstItem="qZN-KU-ZkG" firstAttribute="leading" secondItem="gQ1-fT-2uq" secondAttribute="leading" id="Yw8-kY-O89"/>
+                            <constraint firstItem="xOl-LY-tbd" firstAttribute="trailing" secondItem="gQ1-fT-2uq" secondAttribute="trailing" id="d2K-Ud-l3h"/>
+                            <constraint firstItem="gQ1-fT-2uq" firstAttribute="trailing" secondItem="qZN-KU-ZkG" secondAttribute="trailing" id="dR7-aD-m9t"/>
+                            <constraint firstItem="xOl-LY-tbd" firstAttribute="leading" secondItem="gQ1-fT-2uq" secondAttribute="leading" id="g29-nl-D5y"/>
+                            <constraint firstItem="xOl-LY-tbd" firstAttribute="top" secondItem="qZN-KU-ZkG" secondAttribute="bottom" constant="8" id="xPd-be-Pf1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gQ1-fT-2uq"/>
+                    </view>
+                    <connections>
+                        <outlet property="imgView" destination="qZN-KU-ZkG" id="doT-6Y-wqg"/>
+                        <outlet property="txtDescription" destination="xOl-LY-tbd" id="1cZ-S7-r9H"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5cx-qy-Jxz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>
