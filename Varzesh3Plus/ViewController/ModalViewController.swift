@@ -8,16 +8,21 @@
 
 import UIKit
 import SwiftSoup
+import WebKit
 
-class ModalViewController: UIViewController {
+class ModalViewController: UIViewController , WKNavigationDelegate {
     var document: Document = Document.init("")
+    @IBOutlet weak var txtTitle: UILabel!
+    @IBOutlet weak var txtNewsNumber: UILabel!
     @IBOutlet weak var imgView: UIImageView!
-    @IBOutlet weak var txtDescription: UITextView!
+    @IBOutlet weak var txtDescription: UILabel!
+    @IBOutlet weak var webView: WKWebView!
     var strDescription : String?
     var link : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        webView.navigationDelegate = self
         getFromLink(link: link ?? "")
     }
     
@@ -46,12 +51,20 @@ class ModalViewController: UIViewController {
                 linkForShow = "https" + linkForShow
             }
             print(linkForShow)
-            self.downloadHTML(urlString: linkForShow, cssString: ".news-page--news-text,[property=og:image]")
+            self.downloadHTML(urlString: linkForShow, cssString: ".news-page--news-text,[property=og:image],.news-page--news-title, .news-page--news-lead ,.news-page--news-info ")
+//            self.downloadHTML(urlString: linkForShow, cssString: ".news-page--news-text,[property=og:image],.news-page--news-title,.news-page--news-info")
                 //                    [property=og:image]
                 //                    .news-page--news-text,
                
         }
         
     }
-
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
+        let css = "body { background-color : #434343 ; color: #ffffff  ; direction: rtl ; display:inline-block ; font-size: 40px}"
+        
+        let js = "var style = document.createElement('style'); style.innerHTML = '\(css)'; document.head.appendChild(style);"
+        
+        webView.evaluateJavaScript(js, completionHandler: nil)
+    }
 }
