@@ -20,9 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = .black
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-
-        
-        
+        UINavigationBar.appearance().backgroundColor = UIColor.black
+        UIBarButtonItem.appearance().tintColor = UIColor.white
+        UIFont.initialize()
         
         return true
     }

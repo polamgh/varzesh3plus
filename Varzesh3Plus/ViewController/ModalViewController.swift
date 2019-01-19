@@ -14,7 +14,6 @@ class ModalViewController: UIViewController , WKNavigationDelegate {
     var document: Document = Document.init("")
     @IBOutlet weak var txtTitle: UILabel!
     @IBOutlet weak var txtNewsNumber: UILabel!
-    @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var txtDescription: UILabel!
     @IBOutlet weak var webView: WKWebView!
     var strDescription : String?
@@ -24,6 +23,8 @@ class ModalViewController: UIViewController , WKNavigationDelegate {
         super.viewDidLoad()
         webView.navigationDelegate = self
         getFromLink(link: link ?? "")
+        txtTitle.textColor = UIColor.cyan
+        
     }
     
 
@@ -59,12 +60,5 @@ class ModalViewController: UIViewController , WKNavigationDelegate {
         }
         
     }
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        
-        let css = "body { background-color : #434343 ; color: #ffffff  ; direction: rtl ; display:inline-block ; font-size: 40px}"
-        
-        let js = "var style = document.createElement('style'); style.innerHTML = '\(css)'; document.head.appendChild(style);"
-        
-        webView.evaluateJavaScript(js, completionHandler: nil)
-    }
+    
 }

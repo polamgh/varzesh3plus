@@ -28,8 +28,7 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         self.title = "همه اخبار"
-        UINavigationBar.appearance().backgroundColor = UIColor.black
-        UIBarButtonItem.appearance().tintColor = UIColor.white
+        
         
         if #available(iOS 10.0, *) {
             tableView.refreshControl = UIRefreshControl()
@@ -70,6 +69,7 @@ extension ViewController : UITableViewDataSource , UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NewsCellMain
         cell.txtTitle.text = self.feed?.items?[indexPath.row].title
+        cell.txtTitle.textColor = UIColor.cyan
         cell.txtDescription.text = self.feed?.items?[indexPath.row].description
 //        cell2.txtBody.text =  self.feed?.items?[indexPath.row].link
         return cell
@@ -92,3 +92,19 @@ extension ViewController : UITableViewDataSource , UITableViewDelegate {
     }
 }
 
+
+
+extension CGFloat {
+    static func random() -> CGFloat {
+        return CGFloat(arc4random()) / CGFloat(UInt32.max)
+    }
+}
+
+extension UIColor {
+    static func random() -> UIColor {
+        return UIColor(red:   .random(),
+                       green: .random(),
+                       blue:  .random(),
+                       alpha: 1.0)
+    }
+}

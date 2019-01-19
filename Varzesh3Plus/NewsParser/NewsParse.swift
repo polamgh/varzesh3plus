@@ -8,6 +8,8 @@
 
 import Foundation
 import SwiftSoup
+import UIKit
+import WebKit
 
 extension ModalViewController {
     func downloadHTML(urlString : String , cssString : String ) {
@@ -52,12 +54,7 @@ extension ModalViewController {
             txtNewsNumber.text = arryText[0]
             txtTitle.text = arryText[1]
             txtDescription.text = arryText[2]
-//            if arryHtml.count > 1{
-            webView.loadHTMLString(arryHtml.last! , baseURL: nil)
-//            }else{
-//                webView.loadHTMLString(arryHtml[0], baseURL: nil)
-//            }
-            
+
             
             do{
                  let imageArray =  try? elements.select("meta").array()
@@ -65,13 +62,16 @@ extension ModalViewController {
                     let imageUrl = try imageArray?[0].attr("content")
                     print(imageUrl)
                     if imageUrl == nil || imageUrl == "" {
-                        imgView.isHidden = true
+                        webView.loadHTMLString(arryHtml.last! , baseURL: nil)
                     }else{
-                        self.downloadImage(from: URL(string: imageUrl ?? "")!)
+                        let addHtml = "<div dirction: center class=\"col-xs-12 col-md-5 pull-lef\"> <img width=\"100%\" height=\"500\" src=\"\(imageUrl!)\"  > </div>"
+                        webView.loadHTMLString(addHtml + arryHtml.last! , baseURL: nil)
                     }
+                }else {
+                    webView.loadHTMLString(arryHtml.last! , baseURL: nil)
+
                 }
             }catch{
-                
             }
             
         } catch let error {
@@ -89,9 +89,17 @@ extension ModalViewController {
             print(response?.suggestedFilename ?? url.lastPathComponent)
             print("Download Finished")
             DispatchQueue.main.async() {
-                self.imgView.image = UIImage(data: data)
+//                self.imgView.image = UIImage(data: data)
             }
         }
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        let css = " body { background-color : #434343 ; color: #ffffff  ; direction: rtl ; display:inline-block ; font-size: 40px ; font-weight: bold; font-family: \"Shabnam-Bold-FD\"}"
+        
+        let js = "var style = document.createElement('style'); style.innerHTML = '\(css)'; document.head.appendChild(style);"
+        
+        webView.evaluateJavaScript(js, completionHandler: nil)
     }
 }
 
