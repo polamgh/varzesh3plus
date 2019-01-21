@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         }
     }
     
-
+    
     
     @objc func refreshHandler() {
         let deadlineTime = DispatchTime.now() + .seconds(1)
@@ -80,15 +80,26 @@ extension ViewController : UITableViewDataSource , UITableViewDelegate {
         let cell = tableView.cellForRow(at: indexPath) as! NewsCellMain
         print(cell.txtTitle.text ?? "")
         tableView.reloadRows(at: [indexPath], with: .automatic)
+        let link = self.feed?.items?[indexPath.row].link ?? ""
+        Loading.start()
+        
         let story = UIStoryboard.init(name: "ModalView", bundle: nil)
         let modal = story.instantiateViewController(withIdentifier: "ModalView") as! ModalViewController
-        let transitionDelegate = DeckTransitioningDelegate()
-        modal.link = self.feed?.items?[indexPath.row].link ?? ""
-        modal.transitioningDelegate = transitionDelegate
-        modal.modalPresentationStyle = .custom
-        self.present(modal, animated: true, completion: nil)
+        NewsParse().getDataFromLink(link: link ?? "") { (modelParseCss, error) in
+            if error == nil{
+                modal.modelParseCss = modelParseCss
+                modal.link = link
+                self.show(modal, sender: self)
+            }else{
+                guard let err = error as? VarzeshError else {
+                    return
+                }
+                UIAlertController.showAlert(err.localizedDescription , self )
+            }
+        }
         
     }
+    
 }
 
 

@@ -16,24 +16,38 @@ class ModalViewController: UIViewController , WKNavigationDelegate {
     @IBOutlet weak var txtNewsNumber: UILabel!
     @IBOutlet weak var txtDescription: UILabel!
     @IBOutlet weak var webView: WKWebView!
-    var strDescription : String?
+    var modelParseCss : ModelParseCss?
     var link : String?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
-        
-        NewsParse().getDataFromLink(link: link ?? "") { (modelParseCss, error) in
-            self.txtTitle.text = modelParseCss?.title ?? ""
-            self.txtNewsNumber.text = modelParseCss?.newsNumber ?? ""
-            self.txtDescription.text = modelParseCss?.description ?? ""
-            self.webView.loadHTMLString(modelParseCss?.newsHtml ?? "" , baseURL: nil)
-        }
+        self.title = "شرح"
+        showNews()
         
     }
-
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    
+    @IBAction func btnShare(_ sender: Any) {
+        
+        let textToShare = [(link ?? "") + "\n اشتراک گذاری شده از طریق نرم افزار ورزش سه پلاس"]
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    
+    fileprivate func showNews() {
+        self.txtTitle.text = modelParseCss?.title ?? ""
+        self.txtNewsNumber.text = modelParseCss?.newsNumber ?? ""
+        self.txtDescription.text = modelParseCss?.description ?? ""
+        self.webView.loadHTMLString(modelParseCss?.newsHtml ?? "" , baseURL: nil)
         Loading.stop()
+    }
+    
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
         let css = " body { background-color : #ffffff ; color: #000000  ; direction: rtl ; display:inline-block ; font-size: 30px ; font-weight: bold; font-family: \"Shabnam-Bold-FD\"}"
         
         let js = "var style = document.createElement('style'); style.innerHTML = '\(css)'; document.head.appendChild(style);"
