@@ -35,9 +35,11 @@ class ViewController: UIViewController {
             tableView.refreshControl?.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
         }
         
+        Loading.start()
         parser.parseAsync { [weak self] (result) in
             self?.feed = result.rssFeed
             DispatchQueue.main.async {
+                Loading.stop()
                 self?.tableView.reloadData()
             }
         }
@@ -69,13 +71,12 @@ extension ViewController : UITableViewDataSource , UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NewsCellMain
         cell.txtTitle.text = self.feed?.items?[indexPath.row].title
-        cell.txtTitle.textColor = UIColor.cyan
         cell.txtDescription.text = self.feed?.items?[indexPath.row].description
-//        cell2.txtBody.text =  self.feed?.items?[indexPath.row].link
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Loading.start()
         let cell = tableView.cellForRow(at: indexPath) as! NewsCellMain
         print(cell.txtTitle.text ?? "")
         tableView.reloadRows(at: [indexPath], with: .automatic)
@@ -87,24 +88,7 @@ extension ViewController : UITableViewDataSource , UITableViewDelegate {
         modal.modalPresentationStyle = .custom
         self.present(modal, animated: true, completion: nil)
         
-        
-        
     }
 }
 
 
-
-extension CGFloat {
-    static func random() -> CGFloat {
-        return CGFloat(arc4random()) / CGFloat(UInt32.max)
-    }
-}
-
-extension UIColor {
-    static func random() -> UIColor {
-        return UIColor(red:   .random(),
-                       green: .random(),
-                       blue:  .random(),
-                       alpha: 1.0)
-    }
-}

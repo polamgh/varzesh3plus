@@ -6,6 +6,7 @@ target 'Varzesh3Plus' do
   use_frameworks!
 pod 'SwiftSoup'
 pod 'DeckTransition', '~> 2.0'
+pod 'NVActivityIndicatorView'
   # Pods for Varzesh3Plus
 
 end

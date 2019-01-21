@@ -11,11 +11,43 @@ import SwiftSoup
 import UIKit
 import WebKit
 
-extension ModalViewController {
-    func downloadHTML(urlString : String , cssString : String ) {
+class NewsParse {
+    var document: Document = Document.init("")
+    func getDataFromLink(link : String , completion : @escaping ((modelParseCss : ModelParseCss? ,error: Error?)) -> ())  {
+        // Then back to the Main thread to update the UI.
+        DispatchQueue.main.async {
+            let link1 = link.split(separator: "/")
+            var linkForShow = ""
+            for text in (link1.enumerated()) {
+                if text.offset == 4 {
+                    
+                }
+                else if text.offset == 0{
+                    linkForShow = linkForShow + text.element + "//"
+                    
+                }else {
+                    linkForShow = linkForShow + text.element + "/"
+                }
+            }
+            linkForShow.removeLast()
+            
+            print(linkForShow.prefix(5))
+            if linkForShow.prefix(5) == "http:"{
+                linkForShow.removeFirst(4)
+                linkForShow = "https" + linkForShow
+            }
+            print(linkForShow)
+            self.downloadHTML(urlString: linkForShow, cssString: ".news-page--news-text,[property=og:image],.news-page--news-title, .news-page--news-lead ,.news-page--news-info "){ (modelParseCss, error) in
+                    completion(( modelParseCss , error ))
+                }
+            
+        }
+        
+    }
+    fileprivate func downloadHTML(urlString : String , cssString : String  , completion : @escaping ((modelParseCss : ModelParseCss? , error : Error?)) -> ()) {
         guard let url = URL(string: urlString) else {
             // an error occurred
-            UIAlertController.showAlert("Error: \(urlString) doesn't seem to be a valid URL", self)
+            completion((nil , VarzeshError.runtimeError("Error: \(urlString) doesn't seem to be a valid URL") ))
             return
         }
         
@@ -25,15 +57,21 @@ extension ModalViewController {
             // parse it into a Document
             document = try SwiftSoup.parse(html)
             // parse css query
-            parse(CSSText: cssString)
+            parse(CSSText: cssString){ (modelParseCss , error) in
+                completion(( modelParseCss , error ))
+                return
+            }
+            
         } catch let error {
             // an error occurred
-            UIAlertController.showAlert("Error: \(error)", self)
+            completion((nil , VarzeshError.runtimeError("Error: \(error.localizedDescription)") ))
+            return
         }
         
     }
     
-    func parse(CSSText : String)  {
+    fileprivate func parse(CSSText : String , completion : @escaping (( modelParseCss : ModelParseCss? , error: Error?)) -> ())  {
+        var modelParseNews = ModelParseCss()
         do {
             
             // firn css selector
@@ -51,63 +89,41 @@ extension ModalViewController {
                     arryText.append(text)
                 }
             }
-            txtNewsNumber.text = arryText[0]
-            txtTitle.text = arryText[1]
-            txtDescription.text = arryText[2]
+            modelParseNews.newsNumber = arryText[0]
+            modelParseNews.title = arryText[1]
+            modelParseNews.description = arryText[2]
 
-            
             do{
                  let imageArray =  try? elements.select("meta").array()
                 if (imageArray?.count ?? 0) > 0 {
                     let imageUrl = try imageArray?[0].attr("content")
-                    print(imageUrl)
+                    print(imageUrl ?? "")
                     if imageUrl == nil || imageUrl == "" {
-                        webView.loadHTMLString(arryHtml.last! , baseURL: nil)
+                        modelParseNews.newsHtml = arryHtml.last ?? ""
+                        completion((modelParseNews , nil))
+                        return
                     }else{
                         let addHtml = "<div dirction: center class=\"col-xs-12 col-md-5 pull-lef\"> <img width=\"100%\" height=\"500\" src=\"\(imageUrl!)\"  > </div>"
-                        webView.loadHTMLString(addHtml + arryHtml.last! , baseURL: nil)
+                        modelParseNews.newsHtml = addHtml + (arryHtml.last ?? "")
+                        completion((modelParseNews , nil))
+                        return
                     }
                 }else {
-                    webView.loadHTMLString(arryHtml.last! , baseURL: nil)
-
+                    modelParseNews.newsHtml = arryHtml.last ?? ""
+                    completion((modelParseNews , nil))
+                    return
                 }
             }catch{
+                completion((nil , VarzeshError.unknowException))
             }
             
         } catch let error {
-            UIAlertController.showAlert("Error: \(error)", self)
+            completion((nil , VarzeshError.runtimeError(error.localizedDescription)))
         }
     }
     
-    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-    }
-    func downloadImage(from url: URL) {
-        print("Download Started")
-        getData(from: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            print(response?.suggestedFilename ?? url.lastPathComponent)
-            print("Download Finished")
-            DispatchQueue.main.async() {
-//                self.imgView.image = UIImage(data: data)
-            }
-        }
-    }
     
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let css = " body { background-color : #434343 ; color: #ffffff  ; direction: rtl ; display:inline-block ; font-size: 40px ; font-weight: bold; font-family: \"Shabnam-Bold-FD\"}"
-        
-        let js = "var style = document.createElement('style'); style.innerHTML = '\(css)'; document.head.appendChild(style);"
-        
-        webView.evaluateJavaScript(js, completionHandler: nil)
-    }
+   
 }
 
 
-extension UIAlertController {
-    static public func showAlert(_ message: String, _ controller: UIViewController) {
-        let alert = UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        controller.present(alert, animated: true, completion: nil)
-    }
-}

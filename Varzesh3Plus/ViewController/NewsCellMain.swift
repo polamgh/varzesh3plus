@@ -15,7 +15,6 @@ class NewsCellMain: UITableViewCell {
     @IBOutlet weak var txtDescription: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.viewBack.layer.cornerRadius = 8
        
     }
 
