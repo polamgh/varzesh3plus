@@ -8,26 +8,26 @@
 
 import UIKit
 import SwiftSoup
-import DeckTransition
 
-let feedURL = URL(string: "https://www.varzesh3.com/rss/all")!
+
 class ViewController: UIViewController {
     var document: Document = Document.init("")
     typealias Item = (text: String, html: String)
     var items: [Item] = []
     @IBOutlet var tableView: UITableView!
     var feed: RSSFeed?
-    let parser = FeedParser(URL: feedURL)
+    
+    
     
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let parser = FeedParser(URL: feedURL! )
         tableView.delegate = self
         tableView.dataSource = self
-        self.title = "همه اخبار"
+        self.title = Page_Title
         
         
         if #available(iOS 10.0, *) {

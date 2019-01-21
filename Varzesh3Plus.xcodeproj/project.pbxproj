@@ -118,6 +118,7 @@
 		2C48425F21F4FC4400C98B4D /* Designable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48425E21F4FC4400C98B4D /* Designable.swift */; };
 		2C7E3D5321F3B61500FBD48E /* Shabnam-Bold-FD.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C7E3D5221F3B61500FBD48E /* Shabnam-Bold-FD.ttf */; };
 		2C7E3D5521F3B8D200FBD48E /* FontExcention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E3D5421F3B8D200FBD48E /* FontExcention.swift */; };
+		E29930E721F5C3EA0032FF2B /* BaseTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29930E621F5C3EA0032FF2B /* BaseTabBarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -236,6 +237,7 @@
 		316807A7B341277C54611C67 /* Pods-Varzesh3Plus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Varzesh3Plus.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Varzesh3Plus/Pods-Varzesh3Plus.debug.xcconfig"; sourceTree = "<group>"; };
 		9BB103011A9D6E14A6B8F385 /* Pods-Varzesh3Plus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Varzesh3Plus.release.xcconfig"; path = "Pods/Target Support Files/Pods-Varzesh3Plus/Pods-Varzesh3Plus.release.xcconfig"; sourceTree = "<group>"; };
 		C709CF50B3497AB570D69C3B /* Pods_Varzesh3Plus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Varzesh3Plus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E29930E621F5C3EA0032FF2B /* BaseTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -466,6 +468,7 @@
 				2C14ED6621EFD0D5000F1B21 /* NewsCellMain.swift */,
 				2C14ED6821EFDB36000F1B21 /* ModalView.storyboard */,
 				2C14ED6A21EFDB76000F1B21 /* ModalViewController.swift */,
+				E29930E621F5C3EA0032FF2B /* BaseTabBarView.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -686,6 +689,7 @@
 				2C14ECC421EFCA07000F1B21 /* RSSFeedImage.swift in Sources */,
 				2C14ED0B21EFCA36000F1B21 /* SyndicationNamespace.swift in Sources */,
 				2C14ED5821EFCACD000F1B21 /* String + toDuration.swift in Sources */,
+				E29930E721F5C3EA0032FF2B /* BaseTabBarView.swift in Sources */,
 				2C14ECFC21EFCA36000F1B21 /* MediaTitle.swift in Sources */,
 				2C14ED4021EFCA99000F1B21 /* AtomFeedEntryLink.swift in Sources */,
 				2C14ECCD21EFCA07000F1B21 /* RSSFeedCategory.swift in Sources */,
