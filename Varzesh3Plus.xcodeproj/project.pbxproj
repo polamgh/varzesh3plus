@@ -118,6 +118,9 @@
 		2C48425F21F4FC4400C98B4D /* Designable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48425E21F4FC4400C98B4D /* Designable.swift */; };
 		2C7E3D5321F3B61500FBD48E /* Shabnam-Bold-FD.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C7E3D5221F3B61500FBD48E /* Shabnam-Bold-FD.ttf */; };
 		2C7E3D5521F3B8D200FBD48E /* FontExcention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E3D5421F3B8D200FBD48E /* FontExcention.swift */; };
+		E264343421F840C10010908D /* Video.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E264343321F840C10010908D /* Video.storyboard */; };
+		E264343621F841310010908D /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E264343521F841310010908D /* VideoViewController.swift */; };
+		E264343821F867140010908D /* ViedeoParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E264343721F867140010908D /* ViedeoParser.swift */; };
 		E29930E721F5C3EA0032FF2B /* BaseTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29930E621F5C3EA0032FF2B /* BaseTabBarView.swift */; };
 /* End PBXBuildFile section */
 
@@ -237,6 +240,9 @@
 		316807A7B341277C54611C67 /* Pods-Varzesh3Plus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Varzesh3Plus.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Varzesh3Plus/Pods-Varzesh3Plus.debug.xcconfig"; sourceTree = "<group>"; };
 		9BB103011A9D6E14A6B8F385 /* Pods-Varzesh3Plus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Varzesh3Plus.release.xcconfig"; path = "Pods/Target Support Files/Pods-Varzesh3Plus/Pods-Varzesh3Plus.release.xcconfig"; sourceTree = "<group>"; };
 		C709CF50B3497AB570D69C3B /* Pods_Varzesh3Plus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Varzesh3Plus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E264343321F840C10010908D /* Video.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Video.storyboard; sourceTree = "<group>"; };
+		E264343521F841310010908D /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		E264343721F867140010908D /* ViedeoParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViedeoParser.swift; sourceTree = "<group>"; };
 		E29930E621F5C3EA0032FF2B /* BaseTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -456,6 +462,7 @@
 			isa = PBXGroup;
 			children = (
 				2C14ED6321EFCBD3000F1B21 /* NewsParse.swift */,
+				E264343721F867140010908D /* ViedeoParser.swift */,
 			);
 			path = NewsParser;
 			sourceTree = "<group>";
@@ -463,6 +470,7 @@
 		2C14ED6521EFD07E000F1B21 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E264343221F840980010908D /* Video */,
 				2C14EC8C21EFC81F000F1B21 /* ViewController.swift */,
 				2C14EC8E21EFC81F000F1B21 /* Main.storyboard */,
 				2C14ED6621EFD0D5000F1B21 /* NewsCellMain.swift */,
@@ -516,6 +524,15 @@
 				C709CF50B3497AB570D69C3B /* Pods_Varzesh3Plus.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E264343221F840980010908D /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				E264343321F840C10010908D /* Video.storyboard */,
+				E264343521F841310010908D /* VideoViewController.swift */,
+			);
+			path = Video;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -588,6 +605,7 @@
 			files = (
 				2C14EC9521EFC821000F1B21 /* LaunchScreen.storyboard in Resources */,
 				2C14EC9221EFC821000F1B21 /* Assets.xcassets in Resources */,
+				E264343421F840C10010908D /* Video.storyboard in Resources */,
 				2C14EC9021EFC81F000F1B21 /* Main.storyboard in Resources */,
 				2C7E3D5321F3B61500FBD48E /* Shabnam-Bold-FD.ttf in Resources */,
 				2C14ED6921EFDB36000F1B21 /* ModalView.storyboard in Resources */,
@@ -714,6 +732,7 @@
 				2C14ECCA21EFCA07000F1B21 /* RSSFeedItem.swift in Sources */,
 				2C14ED4721EFCA99000F1B21 /* AtomFeedEntrySource.swift in Sources */,
 				2C14ED0521EFCA36000F1B21 /* MediaLocation.swift in Sources */,
+				E264343821F867140010908D /* ViedeoParser.swift in Sources */,
 				2C14ED4521EFCA99000F1B21 /* AtomFeed.swift in Sources */,
 				2C14ED0821EFCA36000F1B21 /* MediaContent.swift in Sources */,
 				2C14ED1421EFCA36000F1B21 /* MediaRights.swift in Sources */,
@@ -738,6 +757,7 @@
 				2C14ECC621EFCA07000F1B21 /* RSSFeed + mapCharacters.swift in Sources */,
 				2C14ED1A21EFCA36000F1B21 /* MediaCopyright.swift in Sources */,
 				2C48425921F4E2FE00C98B4D /* ModelParseCss.swift in Sources */,
+				E264343621F841310010908D /* VideoViewController.swift in Sources */,
 				2C14ED4A21EFCA99000F1B21 /* AtomFeedEntryContent.swift in Sources */,
 				2C14ED0321EFCA36000F1B21 /* MediaNamespace.swift in Sources */,
 				2C14ED1321EFCA36000F1B21 /* MediaCommunity.swift in Sources */,

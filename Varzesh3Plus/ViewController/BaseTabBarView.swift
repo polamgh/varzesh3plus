@@ -28,6 +28,9 @@ class BaseTabBarView: UITabBarController  , UITabBarControllerDelegate {
         case 2:
             feedURL = URL(string: "https://www.varzesh3.com/rss/foreignFootball")
             Page_Title = "فوتبال خارجی"
+        case 3:
+            feedURL = URL(string: "https://video.varzesh3.com/rss")
+            Page_Title = "ویدیو"
         default:
             feedURL = URL(string: "https://www.varzesh3.com/rss/all")
         }

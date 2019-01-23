@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import WebKit
 
 class NewsCellMain: UITableViewCell {
 
+    @IBOutlet var imageView1: UIImageView!
     @IBOutlet weak var viewBack: UIView!
     @IBOutlet weak var txtTitle: UILabel!
     @IBOutlet weak var txtDescription: UILabel!

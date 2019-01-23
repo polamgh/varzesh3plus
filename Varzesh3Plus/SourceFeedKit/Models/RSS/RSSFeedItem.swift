@@ -38,6 +38,7 @@ public class RSSFeedItem {
     /// 
     /// Example: Venice Film Festival Tries to Quit Sinking
     public var title: String?
+    public var data : Data?
     
     /// The URL of the item.
     /// 

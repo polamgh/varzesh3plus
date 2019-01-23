@@ -48,7 +48,7 @@ public class RSSFeed {
     /// 
     /// Example: http://www.goupstate.com/
     public var link: String?
-    
+    public var data : String?
     /// Phrase or sentence describing the channel. 
     /// 
     /// Example: The latest news from GoUpstate.com, a Spartanburg Herald-Journal
