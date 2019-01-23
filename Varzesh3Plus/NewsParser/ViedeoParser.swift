@@ -12,7 +12,7 @@ import WebKit
 
 class ViedeoParser {
     var document: Document = Document.init("")
-    func getDataFromLink(link : String , completion : @escaping ((modelParseCss : ModelParseCss? ,error: Error?)) -> ())  {
+    func getDataFromLink(link : String  , cssString : String, completion : @escaping ((modelParseCss : ModelParseCss? ,error: Error?)) -> ())  {
         // Then back to the Main thread to update the UI.
         DispatchQueue.main.async {
             let link1 = link.split(separator: "/")
@@ -36,7 +36,7 @@ class ViedeoParser {
                 linkForShow = "https" + linkForShow
             }
             print(linkForShow)
-            self.downloadHTML(urlString: linkForShow, cssString: ".tamasha-video-embed-frame"){ (modelParseCss, error) in
+            self.downloadHTML(urlString: linkForShow, cssString: cssString){ (modelParseCss, error) in
                 completion(( modelParseCss , error ))
             }
             

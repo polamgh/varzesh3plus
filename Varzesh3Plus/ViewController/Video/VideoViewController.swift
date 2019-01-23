@@ -8,7 +8,8 @@
 
 import UIKit
 import SwiftSoup
-
+import AVKit
+import SafariServices
 
 class VideoViewController: UIViewController {
     var document: Document = Document.init("")
@@ -123,23 +124,44 @@ extension VideoViewController : UITableViewDataSource , UITableViewDelegate {
         tableView.reloadRows(at: [indexPath], with: .automatic)
         let link = self.feed?.items?[indexPath.row].link ?? ""
         Loading.start()
-        
-        let story = UIStoryboard.init(name: "ModalView", bundle: nil)
-        let modal = story.instantiateViewController(withIdentifier: "ModalView") as! ModalViewController
-        ViedeoParser().getDataFromLink(link: link ?? "") { (modelParseCss, error) in
+        ViedeoParser().getDataFromLink(link: link  , cssString: ".tamasha-video-embed-frame") { (modelParseCss, error) in
             if error == nil{
-                modal.modelParseCss = modelParseCss
-                self.parse(CSSText : (modelParseCss?.newsHtml)!)
                 do{
+                    if modelParseCss?.newsHtml == "" {
+                        self.showToSafari(link: link)
+                        return
+                    }
                     let doc: Document = try SwiftSoup.parse((modelParseCss?.newsHtml) ?? "")
                     let video: Elements = try doc.select("iframe[src]")
-                    var html = try video.outerHtml()
-                    modal.modelParseCss?.newsHtml = html
+                    let html = try video.outerHtml()
+                    let linkVideo = html.replacingOccurrences(of: "<iframe src=\"", with: "")
+                    let array = linkVideo.split(separator: "?")
+                    let urlFromServer = String((array.first) ?? "" )
+                    print(urlFromServer)
+                    ViedeoParser().getDataFromLink(link: urlFromServer , cssString: ".mainWrapper") { (modelParseCss, error) in
+                        do{
+                            let doc: Document = try SwiftSoup.parse((modelParseCss?.newsHtml) ?? "")
+                            let video: Elements = try doc.select("source[src$=.mp4]")
+                            let str : String = video.array().first?.description ?? ""
+                            let urlTemp = str.replacingOccurrences(of: "<source src=\"", with: "")
+                            let urlTemp2 = urlTemp.split(separator: "\"")
+                            let finalUrlStr : String = String(urlTemp2.first ?? "")
+                            let videoURL = URL(string: finalUrlStr)
+                            let player = AVPlayer(url: videoURL!)
+                            let playerViewController = AVPlayerViewController()
+                            playerViewController.player = player
+                            
+                            self.present(playerViewController, animated: true) {
+                                Loading.stop()
+                                player.play()
+                            }
+                        }catch{
+                            
+                        }
+                    }
                 }catch{
                     
                 }
-                modal.link = link
-                self.show(modal, sender: self)
             }else{
                 guard let err = error as? VarzeshError else {
                     return
@@ -150,36 +172,35 @@ extension VideoViewController : UITableViewDataSource , UITableViewDelegate {
         
     }
     
-}
-
-
-
-
-
-extension VideoViewController {
-    func parse(CSSText : String)  {
-     
-       
-        do {
-            do{
-                let doc: Document = try SwiftSoup.parse(CSSText)
-                let links: Elements = try doc.select("a[href]") // a with href
-                let pngs: Elements = try doc.select("img[src$=.jpg]")
-                let video: Elements = try doc.select("iframe[src]")
+    
+    func showToSafari(link : String)  {
+        Loading.stop()
+        let link1 = link.split(separator: "/")
+        var linkForShow = ""
+        for text in (link1.enumerated()) {
+            if text.offset == 4 {
                 
-                // img with src ending .png
-                let masthead: Element? = try doc.select("div.masthead").first()
-                
-                // div with class=masthead
-                let resultLinks: Elements? = try doc.select("h3.r > a") // direct a after h3
-            } catch Exception.Error(let type, let message){
-                print(message)
-            } catch {
-                print("error")
             }
-        } catch  {
-            print("error")
+            else if text.offset == 0{
+                linkForShow = linkForShow + text.element + "//"
+                
+            }else {
+                linkForShow = linkForShow + text.element + "/"
+            }
         }
-
+        linkForShow.removeLast()
+        
+        print(linkForShow.prefix(5))
+        if linkForShow.prefix(5) == "http:"{
+            linkForShow.removeFirst(4)
+            linkForShow = "https" + linkForShow
+        }
+        guard let url = URL(string: linkForShow) else {
+            UIAlertController.showAlert("error : \(link)", self)
+            return
+        }
+        let svc = SFSafariViewController(url: url  )
+        self.present(svc, animated: true, completion: nil)
     }
+    
 }
