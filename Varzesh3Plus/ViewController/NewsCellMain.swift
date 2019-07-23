@@ -17,7 +17,7 @@ class NewsCellMain: UITableViewCell {
     @IBOutlet weak var txtDescription: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-       
+       self.viewBack.layer.masksToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

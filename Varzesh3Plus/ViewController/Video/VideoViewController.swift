@@ -127,10 +127,10 @@ extension VideoViewController : UITableViewDataSource , UITableViewDelegate {
         ViedeoParser().getDataFromLink(link: link  , cssString: ".tamasha-video-embed-frame") { (modelParseCss, error) in
             if error == nil{
                 do{
-                    if modelParseCss?.newsHtml == "" {
+//                    if modelParseCss?.newsHtml == "" {
                         self.showToSafari(link: link)
                         return
-                    }
+//                    }
                     let doc: Document = try SwiftSoup.parse((modelParseCss?.newsHtml) ?? "")
                     let video: Elements = try doc.select("iframe[src]")
                     let html = try video.outerHtml()
@@ -147,7 +147,12 @@ extension VideoViewController : UITableViewDataSource , UITableViewDelegate {
                             let urlTemp2 = urlTemp.split(separator: "\"")
                             let finalUrlStr : String = String(urlTemp2.first ?? "")
                             let videoURL = URL(string: finalUrlStr)
-                            let player = AVPlayer(url: videoURL!)
+                            guard let url = videoURL else {
+                                Loading.stop()
+                                 UIAlertController.showAlert("خطایی رخ داده" , self )
+                                return
+                            }
+                            let player = AVPlayer(url: url)
                             let playerViewController = AVPlayerViewController()
                             playerViewController.player = player
                             
